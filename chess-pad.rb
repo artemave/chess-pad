@@ -1,23 +1,25 @@
 #!/usr/bin/ruby
 
 require 'pp'
+
+$:.unshift(File.dirname(__FILE__) + '/lib')
 require 'field/dialpad'
 require 'task/phone_number'
 
 piece, pos = *ARGV
 
-field = Field::DialPad.new
+dialpad = Field::DialPad.new
 
-puts "Phone numbers for #{piece} starting at #{pos}:"
+puts "Phone numbers for #{piece} starting at #{pos}: "
 pp Task::PhoneNumber.new(
   :piece => piece,
-  :field => field,
-  :start_at => pos
+  :field => dialpad,
+  :start_at => dialpad.elements[pos]
 ).run
 
-puts "Number of phones for Queen starting at 5 is " + Task::PhoneNumber.new(
+puts "There are " + Task::PhoneNumber.new(
   :piece => 'queen',
-  :start_at => 5,
-  :field => field
-).run.length
+  :field => dialpad,
+  :start_at => dialpad.elements[5]
+).run.length + " phone numbers for Queen starting at 5"
 
