@@ -4,7 +4,7 @@ require 'pp'
 
 $:.unshift(File.dirname(__FILE__) + '/lib')
 require 'field/dialpad'
-require 'task/phone_number'
+require 'piece_task/phone_number'
 require 'piece'
 
 piece, pos = *ARGV
@@ -12,13 +12,13 @@ piece, pos = *ARGV
 dialpad = Field::DialPad.new
 
 puts "Phone numbers for #{piece} starting at #{pos}: "
-pp PieceTask::PhoneNumber.new(
+pp PieceTask::FindPhoneNumbers.new(
   :piece => Piece::Factory.new(piece),
   :field => dialpad,
   :start_at => dialpad.elements[pos]
 ).run
 
-puts "There are " + PieceTask::PhoneNumber.new(
+puts "There are " + PieceTask::FindPhoneNumbers.new(
   :piece => Piece::Factory.new('queen'),
   :field => dialpad,
   :start_at => dialpad.elements[5]

@@ -1,7 +1,18 @@
-require 'task/base'
+require 'piece_task/base'
 
 module PieceTask
-  class PhoneNumber < Base
+  class FindPhoneNumbers < Base
+
+    VALID_NUMBER = {
+      :length => 10,
+      :element => /\d/
+    }
+
+    def initialize
+      super
+      @piece.valid_moves = VALID_NUMBER[:element]
+      @tree_depth = VALID_NUMBER[:length]
+    end
 
     private
 
