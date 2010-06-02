@@ -3,9 +3,11 @@ module PieceTask
     def initialize(piece, max_depth)
       @max_depth = max_depth
       @current_depth = 1
-      root_node = Node.new(:tree => self, :val => piece)
+      root_node = Node.new(:tree => self, :value => piece)
       build_next_level(root_node)
     end
+
+    private
 
     def build_next_level(parent_node, pos = nil)
       no_deeper_than(@max_depth) do
@@ -27,14 +29,18 @@ module PieceTask
     end
 
     class Node
-      attr_reader :piece
+      attr_reader :value
+      alias :value, :piece
 
       def initialize(args = {})
         @tree = args[:tree]
-        @piece = args[:val]
+        @value = args[:value]
+        @parent = args[:parent]
+        @children = []
       end
 
-      def add_child_node
+      def add_child_node(value)
+        @children << Node.new(:tree => @tree, :value => value, :parent = > self)
       end
     end
   end
