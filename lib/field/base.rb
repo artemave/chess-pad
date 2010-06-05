@@ -1,4 +1,5 @@
 require 'forwardable'
+require 'field/element'
 
 module Field
   class Base
@@ -40,7 +41,7 @@ module Field
         raise "Position already taken by #{existing_element}"
       end
 
-      self[args[:val]] = Element.new(args.merge({:container => self}))
+      self[args[:val]] = Field::Element.new(args.merge({:container => self}))
     end
 
     private

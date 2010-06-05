@@ -16,7 +16,7 @@ describe Field::DialPad do
       @dialpad.elements.keys.find {|e| e =~ /[^\d*#]/}.should be nil
     end
 
-    it 'should be aligned like a phone dialpad' do
+    it 'should be layed out like a phone dialpad' do
       @dialpad['1'].neighbours[:n].should be nil
       @dialpad['1'].neighbours[:ne].should be nil
       @dialpad['1'].neighbours[:e].should == 2

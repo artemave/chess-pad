@@ -1,6 +1,6 @@
 module Field
   class Element
-    attr_reader :val, :x, :y
+    attr_reader :val, :x, :y, :container
 
     def initialize(args)
       @val, @x, @y, @container = args.values_at(:val, :x, :y, :container)
