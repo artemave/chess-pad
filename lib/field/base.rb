@@ -1,6 +1,11 @@
+require 'forwardable'
+
 module Field
   class Base
     attr_reader :elements
+
+    extend Forwardable
+    def_delegators :@elements, :[]
 
     def initialize
       @elements = ElementSet.new
@@ -16,10 +21,39 @@ module Field
   end
 
   class ElementSet < Hash
-    # make digit key work as if it was a string
-    # so that field.elements[5] is the same as field.elements['5']
     def [](key)
-      super(key.to_s)
+      if key.is_a?(Hash)
+        lookup_element_by_pos(key[:x], key[:y])
+      else
+        # make digit key work as if it was a string
+        # so that field.elements[5] is the same as field.elements['5']
+        super(key.to_s)
+      end
+    end
+
+    def add(args = {})
+      [:val, :x, :y].each do |arg|
+        raise "#{arg} must be provided" if args[arg].nil?
+      end
+
+      if existing_element = lookup_element_by_pos(args[:x], args[:y]) and existing_element.val != args[:val]
+        raise "Position already taken by #{existing_element}"
+      end
+
+      self[args[:val]] = Element.new(args.merge({:container => self}))
+    end
+
+    private
+
+    # so that add() is the only public means of adding new elements
+    def []=(*args)
+      super
+    end
+
+    def lookup_element_by_pos(x, y)
+      raise "Coordinates must be provided" unless x and y
+
+      values.find {|element| element.x == x and element.y == y}
     end
   end
 end
