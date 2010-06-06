@@ -30,7 +30,7 @@ module PieceTask
 
     class Node
       attr_reader :value
-      alias :value, :piece
+      alias :piece :value
 
       def initialize(args = {})
         @tree = args[:tree]
@@ -40,7 +40,7 @@ module PieceTask
       end
 
       def add_child_node(value)
-        @children << Node.new(:tree => @tree, :value => value, :parent = > self)
+        @children << Node.new(:tree => @tree, :value => value, :parent => self)
       end
     end
   end
