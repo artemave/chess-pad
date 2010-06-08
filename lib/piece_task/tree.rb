@@ -1,7 +1,7 @@
 module PieceTask
   class Tree
-    def initialize(piece, max_depth)
-      @max_depth = max_depth
+    def initialize(piece, opts = {})
+      @max_depth = opts[:max_depth] || 10
       @current_depth = 1
       root_node = Node.new(:tree => self, :value => piece)
       build_next_level(root_node)
