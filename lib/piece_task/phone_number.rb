@@ -16,7 +16,7 @@ module PieceTask
       end
     end
 
-    def run
+    def run!
       tree = PieceTask::Tree.new(@piece, :max_depth => VALID_PHONE_NUMBER[:length])
 
       tree.leaves.each do |l|

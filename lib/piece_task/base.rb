@@ -11,7 +11,7 @@ module PieceTask
       @result = []
     end
 
-    def run
+    def run!
     end
 
     private

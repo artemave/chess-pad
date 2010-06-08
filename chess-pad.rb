@@ -16,11 +16,11 @@ pp PieceTask::FindPhoneNumbers.new(
   :piece => Piece::Factory.create(piece),
   :field => dialpad,
   :start_at => dialpad.elements[pos]
-).run
+).run!
 
 puts "There are " + PieceTask::FindPhoneNumbers.new(
   :piece => Piece::Factory.create('queen'),
   :field => dialpad,
   :start_at => dialpad.elements[5]
-).run.length + " phone numbers for Queen starting at 5"
+).run!.length + " phone numbers for Queen starting at 5"
 
