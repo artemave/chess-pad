@@ -8,9 +8,11 @@ module Piece
       require file
     end
 
-    def self.create(name, opts)
+    def self.create(args = {})
+      name = args.delete(:piece) or raise 'Piece name must be provided'
+
       piece_class = eval('Piece::' + name.downcase.capitalize)
-      piece_class.new(opts)
+      piece_class.new(args)
     end
 
     private

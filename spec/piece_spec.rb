@@ -36,12 +36,12 @@ describe Piece do
 
   describe Piece::Factory do
     it 'should create valid piece' do
-      Piece::Factory.create('pawn', opts).should be_a_kind_of(Piece::Pawn)
+      Piece::Factory.create(opts.merge(:piece => 'pawn')).should be_a_kind_of(Piece::Pawn)
     end
 
     it 'should validate input' do
-      lambda { Piece::Factory.create }.should raise_error(ArgumentError)
-      lambda { Piece::Factory.create('ball', opts) }.should raise_error(NameError, "uninitialized constant Piece::Ball")
+      lambda { Piece::Factory.create(opts) }.should raise_error(Exception, 'Piece name must be provided')
+      lambda { Piece::Factory.create(opts.merge(:piece => 'ball')) }.should raise_error(NameError, "uninitialized constant Piece::Ball")
     end
   end
 end
