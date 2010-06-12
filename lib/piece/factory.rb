@@ -9,7 +9,7 @@ module Piece
     end
 
     def self.create(args = {})
-      name = args.delete(:piece) or raise 'Piece name must be provided'
+      name = args.delete(:piece) or raise "Couldn't create piece: name must be provided"
 
       piece_class = eval('Piece::' + name.downcase.capitalize)
       piece_class.new(args)
