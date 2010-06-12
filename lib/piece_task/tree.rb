@@ -14,7 +14,7 @@ module PieceTask
         piece = pos ? parent_node.piece.move_to(pos) : parent_node.piece
         node = pos ? parent_node.add_child_node(piece) : parent_node
 
-        piece.next_moves.each do |p|
+        piece.adjacent_moves.each do |p|
           build_next_level(node, p)
         end
       end

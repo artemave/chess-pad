@@ -7,7 +7,7 @@ module Piece
       raise 'Not implemented'
     end
 
-    attr_reader :next_moves
+    attr_reader :adjacent_moves
 
     def move_to(pos)
       raise 'Not implemented'

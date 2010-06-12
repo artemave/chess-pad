@@ -15,9 +15,11 @@ describe Piece do
       lambda { Piece::Base.new(opts) }.should raise_error(Exception, 'Not implemented')
     end
 
-    [:move_to, :next_moves].each do |method|
-      it "it should define API method #{method}" do
-        Piece::Base.method_defined?(method).should be true
+    describe 'public API' do
+      [:move_to, :adjacent_moves].each do |method|
+        it "should define #{method}" do
+          Piece::Base.method_defined?(method).should be true
+        end
       end
     end
   end
@@ -26,15 +28,20 @@ describe Piece do
     opts.keys.each do |param|
       it "should validate the presence of #{param}" do
         lambda {
-          Piece::Base.new(opts.reject {|k,v| k == param})
-        }.should raise_error
+          Piece::Pawn.new(opts.reject {|k,v| k == param})
+        }.should raise_error(Exception, "Invalid #{param} option: ''")
       end
     end
   end
 
   describe Piece::Factory do
-    it 'should create valid piece'
+    it 'should create valid piece' do
+      Piece::Factory.create('pawn', opts).should be_a_kind_of(Piece::Pawn)
+    end
 
-    it 'should complain if piece not found'
+    it 'should validate input' do
+      lambda { Piece::Factory.create }.should raise_error(ArgumentError)
+      lambda { Piece::Factory.create('ball', opts) }.should raise_error(NameError, "uninitialized constant Piece::Ball")
+    end
   end
 end
