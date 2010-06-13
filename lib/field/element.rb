@@ -7,7 +7,12 @@ module Field
     end
 
     def ==(value)
-      self.val == value.to_s
+      # TODO spec me
+      if value.kind_of?(Field::Element)
+        val == value.val && container.equal?(value.container)
+      else
+        val == value.to_s
+      end
     end
 
     alias :to_s :val

@@ -12,6 +12,7 @@ module Piece
       validate_move(pos)
       new_pos = @field[pos]
 
+      # turn into queen if moving onto the top row
       if @field[:x => new_pos.x, :y => new_pos.y + 1].nil?
         Piece::Factory.create(
           :piece => 'queen',

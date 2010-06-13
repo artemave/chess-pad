@@ -13,7 +13,12 @@ module Piece
     attr_reader :position, :field
 
     def move_to(pos)
-      raise 'Not implemented'
+      validate_move(pos)
+      new_pos = @field[pos]
+
+      c = clone
+      c.position = new_pos
+      c
     end
 
     def adjacent_moves
@@ -23,7 +28,7 @@ module Piece
     protected
 
     def position=(pos)
-      @position = pos.kind_of?(Field::Element) ? pos : @field[pos]
+      @position = @field[pos]
     end
 
     private

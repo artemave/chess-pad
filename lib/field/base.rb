@@ -25,6 +25,8 @@ module Field
     def [](key)
       if key.is_a?(Hash)
         lookup_element_by_pos(key[:x], key[:y])
+      elsif key.kind_of?(Field::Element)
+        values.find {|v| v == key} #TODO spec me
       else
         # make digit key work as if it was a string
         # so that field.elements[5] is the same as field.elements['5']
