@@ -1,3 +1,5 @@
+require 'piece/factory'
+
 module PieceTask
   class Base
     def initialize(args = {})

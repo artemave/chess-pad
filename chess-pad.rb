@@ -5,7 +5,6 @@ require 'pp'
 $:.unshift(File.dirname(__FILE__) + '/lib')
 require 'field/dialpad'
 require 'piece_task/phone_number'
-require 'piece'
 
 piece, pos = *ARGV
 

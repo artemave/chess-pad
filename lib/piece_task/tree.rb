@@ -40,7 +40,9 @@ module PieceTask
       end
 
       def add_child_node(value)
-        @children << Node.new(:tree => @tree, :value => value, :parent => self)
+        node = Node.new(:tree => @tree, :value => value, :parent => self)
+        @children << node
+        node
       end
     end
   end
