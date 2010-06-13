@@ -7,7 +7,7 @@ module Piece
       validate_input(args)
 
       @field = args[:field]
-      @position = @field[args[:start_at]]
+      self.position = args[:start_at]
     end
 
     attr_reader :position, :field
@@ -18,6 +18,12 @@ module Piece
 
     def adjacent_moves
       raise 'Not implemented'
+    end
+
+    protected
+
+    def position=(pos)
+      @position = pos.kind_of?(Field::Element) ? pos : @field[pos]
     end
 
     private
@@ -41,15 +47,11 @@ module Piece
         raise "Couldn't create piece: " + errors.join('; ')
       end
     end
-
-    def position=(pos)
-      @position = @field[pos]
-    end
   end
 
   class InvalidMove < Exception
     def initialize(piece, pos)
-      super("#{pos} is unreachable for #{piece.inspect}")
+      super("#{pos} is unreachable for #{piece.class} at #{piece.position}")
     end
   end
 end

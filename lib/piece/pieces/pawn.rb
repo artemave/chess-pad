@@ -3,13 +3,16 @@ require 'piece/factory'
 
 module Piece
   class Pawn < Base
+    def initialize(*args)
+      super
+      @first_move = true
+    end
+
     def move_to(pos)
-      @first_move = @first_move.nil? ? true : false
-
+      validate_move(pos)
       new_pos = @field[pos]
-      validate_move(new_pos)
 
-      if new_pos.neighbours[:n].nil?
+      if @field[:x => new_pos.x, :y => new_pos.y + 1].nil?
         Piece::Factory.create(
           :piece => 'queen',
           :field => @field,
@@ -18,20 +21,30 @@ module Piece
       else
         c = clone
         c.position = new_pos
+        c.first_move = false
         c
       end
     end
 
     def adjacent_moves
-      (adm = []) << @position
+      adm = [@position]
 
-      adm << @position.neighbours[:n] if @position.neighbours[:n]
+      if one_space_forward = @field[:x => @position.x, :y => @position.y + 1]
+        adm << one_space_forward
+      end
       
-      if @first_move and [1,2].include?(@position.row) and @field.rows > 3
-        adm << @position.neighbours[:n].neighbours[:n]
+      if first_move and [1,2].include?(@position.y)
+        if two_space_forward = @field[:x => @position.x, :y => @position.y + 2]
+          adm << two_space_forward
+        end
       end
 
       adm
     end
+
+    protected
+
+    attr_accessor :first_move
+
   end
 end

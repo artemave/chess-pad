@@ -22,5 +22,7 @@ module Field
     def ==(value)
       self.val == value.to_s
     end
+
+    alias :to_s :val
   end
 end

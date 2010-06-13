@@ -41,10 +41,8 @@ describe Piece do
       lambda { @pawn.move_to(2) }.should_not raise_error
     end
 
-    it 'should not be possible to move piece outside the field'
-
     it 'should be aware of adjacent possible moves' do
-      @pawn.adjacent_moves.should == [2]
+      @pawn.adjacent_moves.should == [5,2]
     end
   end
 
@@ -64,16 +62,16 @@ describe Piece do
       @pawn = Piece::Factory.create(
         :piece => 'pawn',
         :field => Field::DialPad.new,
-        :start_at => 5
+        :start_at => 8
       )
     end
 
     it 'should be able to move one space forward' do
-      @pawn.move_to(2).position.should == 2
+      @pawn.move_to(5).position.should == 5
     end
 
     it 'should be able to move onto the same position' do
-      @pawn.move_to(5).position.should == 5
+      @pawn.move_to(8).position.should == 8
     end
 
     describe 'when starting on one of the bottom two rows' do
@@ -91,21 +89,25 @@ describe Piece do
         @pawn.move_to(5).position.should == 5
 
         # starts at second row
-        @pawn.send(:position, 7).move_to(1).position.should == 1
+        @pawn.send(:position=, 7)
+        @pawn.move_to(1).position.should == 1
 
         # starts at first row and first moves one space forward
+        @pawn.send(:position=, 0)
         @pawn = @pawn.move_to(8)
-        lambda { @pawn.move_to(2) }.should raise_error(Piece::InvalidMove, "2 is unreachable for #{@pawn.inspect}")
+        lambda { @pawn.move_to(2) }.should raise_error(Piece::InvalidMove, "2 is unreachable for #{@pawn.class} at #{@pawn.position}")
       end
     end
 
     it 'should not allow any other moves' do
-      [1,3,4,6,7,8,9,'*',0,'#'].each do |pos|
-        lambda { @pawn.move_to(pos) }.should raise_error(Piece::InvalidMove, "#{pos} is unreachable for #{@pawn.inspect}")
+      @pawn.send(:position=, 5)
+      [1,3,4,6,7,8,9,'*',0,'#','34','g'].each do |pos|
+        lambda { @pawn.move_to(pos) }.should raise_error(Piece::InvalidMove, "#{pos} is unreachable for #{@pawn.class} at #{@pawn.position}")
       end
     end
 
     it 'should turn into Queen once moved onto the top row' do
+      @pawn.send(:position=, 5)
       @pawn.should be_a_kind_of(Piece::Pawn)
       @pawn.move_to(2).should be_a_kind_of(Piece::Queen)
     end
