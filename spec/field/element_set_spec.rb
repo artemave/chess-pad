@@ -53,12 +53,12 @@ describe Field::ElementSet do
     end
 
     it 'should allow lookup by coordinates' do
-      @es[{:x => 1, :y => 1}].should be @es[1]
+      @es[:x => 1, :y => 1].should be @es[1]
     end
 
     it 'should freak out if either coordinate is missing' do
-      lambda {@es[{:x => 1}]}.should raise_error
-      lambda {@es[{:y => 1}]}.should raise_error
+      lambda {@es[:x => 1]}.should raise_error
+      lambda {@es[:y => 1]}.should raise_error
     end
 
     it 'may reduce my daily rate since you actually bothered reading to this point' do
