@@ -14,13 +14,6 @@ describe Piece::Queen do
   end
 
   it 'should be able to move anywhere (within the field) but 1 and 3' do
-    @queen.field.elements.values.each do |e|
-      if [1,3].include?(e)
-        lambda {@queen.move_to(e)}.should raise_error(Piece::InvalidMove, "#{e} is unreachable for #{@queen.class} at #{@queen.position}")
-      else
-        @queen.move_to(e).position.should == e
-      end
-    end
+    @queen.should move_anywhere_but([1,3])
   end
-
 end
