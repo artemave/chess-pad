@@ -1,8 +1,11 @@
 module PieceTask
   class Tree
+    attr_reader :leaves
+
     def initialize(piece, opts = {})
       @max_depth = opts[:max_depth] || 10
       @current_depth = 0
+      @leaves = []
       root_node = Node.new(:tree => self, :value => piece)
       build_next_level(root_node)
     end
@@ -17,6 +20,8 @@ module PieceTask
         piece.adjacent_moves.each do |p|
           build_next_level(node, p)
         end
+
+        @leaves << node
       end
     end
 
@@ -29,20 +34,28 @@ module PieceTask
     end
 
     class Node
-      attr_reader :value
+      attr_reader :value, :parent
       alias :piece :value
 
       def initialize(args = {})
         @tree = args[:tree]
         @value = args[:value]
         @parent = args[:parent]
-        @children = []
       end
 
       def add_child_node(value)
-        node = Node.new(:tree => @tree, :value => value, :parent => self)
-        @children << node
-        node
+        Node.new(:tree => @tree, :value => value, :parent => self)
+      end
+
+      # TODO spec me
+      def parent_nodes
+        parent_nodes = []
+        node = self
+        loop do
+          node = node.parent || break
+          parent_nodes << node
+        end
+        parent_nodes
       end
     end
   end
