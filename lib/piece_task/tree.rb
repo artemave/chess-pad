@@ -2,7 +2,7 @@ module PieceTask
   class Tree
     def initialize(piece, opts = {})
       @max_depth = opts[:max_depth] || 10
-      @current_depth = 1
+      @current_depth = 0
       root_node = Node.new(:tree => self, :value => piece)
       build_next_level(root_node)
     end
@@ -21,7 +21,7 @@ module PieceTask
     end
 
     def no_deeper_than(depth)
-      unless @current_depth > depth
+      if @current_depth < depth
         @current_depth+=1
         yield
         @current_depth-=1

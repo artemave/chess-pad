@@ -1,7 +1,7 @@
 require 'piece/base'
 
 module Piece
-  class Queen < Base
+  class Bishop < Base
     def adjacent_moves
       adm = [@position]
 
@@ -16,20 +16,12 @@ module Piece
           end
         }
         
-        # west moves
-        collect_moves.call(-n, 0)
         # north west moves
         collect_moves.call(-n, n)
-        # north moves
-        collect_moves.call(0, n)
         # north east moves
         collect_moves.call(n, n)
-        # east moves
-        collect_moves.call(n, 0)
         # south east moves
         collect_moves.call(n, -n)
-        # south moves
-        collect_moves.call(0, -n)
         # south west moves
         collect_moves.call(-n, -n)
 
