@@ -11,11 +11,14 @@ piece, pos = *ARGV
 dialpad = Field::DialPad.new
 
 puts "Phone numbers for #{piece} starting at #{pos}: "
-pp PieceTask::FindPhoneNumbers.new(
+res = PieceTask::FindPhoneNumbers.new(
   :piece => piece,
   :field => dialpad,
   :start_at => dialpad.elements[pos]
 ).run!
+
+pp res
+puts "Total: #{res.length}"
 
 puts "There are " + PieceTask::FindPhoneNumbers.new(
   :piece => 'queen',

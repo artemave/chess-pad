@@ -21,7 +21,7 @@ module PieceTask
           build_next_level(node, p)
         end
 
-        @leaves << node
+        @leaves << node if node.children.empty?
       end
     end
 
@@ -34,17 +34,20 @@ module PieceTask
     end
 
     class Node
-      attr_reader :value, :parent
+      attr_reader :value, :parent, :children
       alias :piece :value
 
       def initialize(args = {})
         @tree = args[:tree]
         @value = args[:value]
         @parent = args[:parent]
+        @children = []
       end
 
       def add_child_node(value)
-        Node.new(:tree => @tree, :value => value, :parent => self)
+        node = Node.new(:tree => @tree, :value => value, :parent => self)
+        @children << node
+        node
       end
 
       # TODO spec me

@@ -20,9 +20,9 @@ module PieceTask
       tree = PieceTask::Tree.new(@piece, :max_depth => VALID_PHONE_NUMBER[:length])
 
       tree.leaves.each do |l|
-        number = l.value
+        number = l.piece.position.to_s
         l.parent_nodes.each do |n|
-          number = n.value + number # string concatenation! don't get fooled
+          number = n.piece.position.to_s + number
         end
 
         @result << number if number.valid_phone_number?
