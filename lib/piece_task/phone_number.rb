@@ -6,13 +6,13 @@ module PieceTask
 
     VALID_PHONE_NUMBER = {
       :length => 10,
-      :element => /\d/
+      :element => '\d'
     }
 
     Object.class_eval do
       def valid_phone_number?
         val = self.to_s
-        val.length == VALID_PHONE_NUMBER[:length] && val =~ VALID_PHONE_NUMBER[:element]
+        val =~ /^#{VALID_PHONE_NUMBER[:element]}{#{VALID_PHONE_NUMBER[:length]}}$/
       end
     end
 
