@@ -3,7 +3,9 @@ require 'piece/base'
 module Piece
   class Queen < Base
     def adjacent_moves
-      adm = [@position]
+      return @adm if defined?(@adm)
+
+      @adm = [@position]
 
       n = 1
       loop do
@@ -11,7 +13,7 @@ module Piece
 
         collect_moves = Proc.new {|dx,dy|
           if next_move = @field[:x => @position.x + dx, :y => @position.y + dy]
-            adm << next_move
+            @adm << next_move
             hit = true
           end
         }
@@ -37,7 +39,7 @@ module Piece
         n += 1
       end
 
-      adm
+      @adm
     end
   end
 end

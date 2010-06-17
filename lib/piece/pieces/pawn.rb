@@ -28,19 +28,21 @@ module Piece
     end
 
     def adjacent_moves
-      adm = [@position]
+      return @adm if defined?(@adm) and !first_move
+
+      @adm = [@position]
 
       if one_space_forward = @field[:x => @position.x, :y => @position.y + 1]
-        adm << one_space_forward
+        @adm << one_space_forward
       end
       
       if first_move and [1,2].include?(@position.y)
         if two_space_forward = @field[:x => @position.x, :y => @position.y + 2]
-          adm << two_space_forward
+          @adm << two_space_forward
         end
       end
 
-      adm
+      @adm
     end
 
     protected
