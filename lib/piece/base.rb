@@ -16,9 +16,8 @@ module Piece
       validate_move(pos)
       new_pos = @field[pos]
 
-      c = clone
-      c.position = new_pos
-      c
+      clone = self.class.new(:start_at => pos, :field => field)
+      clone
     end
 
     def adjacent_moves

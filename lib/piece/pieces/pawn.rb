@@ -20,10 +20,9 @@ module Piece
           :start_at => new_pos
         )
       else
-        c = clone
-        c.position = new_pos
-        c.first_move = false
-        c
+        clone = self.class.new(:start_at => pos, :field => field)
+        clone.first_move = false
+        clone
       end
     end
 
