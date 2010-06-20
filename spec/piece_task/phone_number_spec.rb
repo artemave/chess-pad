@@ -24,16 +24,14 @@ describe PieceTask::FindPhoneNumbers do
 
   it 'should collect all valid phone numbers for a piece' do
     t = PieceTask::FindPhoneNumbers.new(
-      :piece => 'king',
+      :piece => 'pawn',
       :start_at => 8,
       :field => Field::DialPad.new
     )
     PieceTask::FindPhoneNumbers::VALID_PHONE_NUMBER[:length] = 3
 
     res = t.run!
-
-    puts res
-    puts res.length
+    res.should == ["888","885","855","852","822","821","823","826","825","824","828","820"]
     
     PieceTask::FindPhoneNumbers::VALID_PHONE_NUMBER[:length] = 10
   end
