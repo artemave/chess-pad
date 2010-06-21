@@ -22,6 +22,12 @@ module Field
   end
 
   class ElementSet < Hash
+
+    def initialize(*args)
+      @lookup_cache = {}
+      super
+    end
+
     def [](key)
       if key.is_a?(Hash)
         lookup_element_by_pos(key[:x], key[:y])
@@ -56,7 +62,7 @@ module Field
     def lookup_element_by_pos(x, y)
       raise "Coordinates must be provided" unless x and y
 
-      values.find {|element| element.x == x and element.y == y}
+      @lookup_cache[[x,y]] ||= values.find {|element| element.x == x and element.y == y}
     end
   end
 end

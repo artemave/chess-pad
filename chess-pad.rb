@@ -20,9 +20,9 @@ res = PieceTask::FindPhoneNumbers.new(
 pp res
 puts "Total: #{res.length}"
 
-puts "There are " + PieceTask::FindPhoneNumbers.new(
-  :piece => 'queen',
-  :field => dialpad,
-  :start_at => dialpad.elements[5]
-).run!.length + " phone numbers for Queen starting at 5"
+#puts "There are " + PieceTask::FindPhoneNumbers.new(
+#  :piece => 'queen',
+#  :field => dialpad,
+#  :start_at => dialpad.elements[5]
+#).run!.length + " phone numbers for Queen starting at 5"
 
